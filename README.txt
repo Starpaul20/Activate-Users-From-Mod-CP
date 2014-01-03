@@ -1,0 +1,25 @@
+## INFORMATION ##
+
+Activate Users from Mod CP (2.1) for MyBB 1.6
+Created by: Starpaul20
+Copyright: ©2010
+License: GPL
+
+Allows Super Moderators and Administrators to activate or delete user accounts that are Awaiting Activation from the Moderator CP.
+
+The activation section will only work for Super Moderators and Administrators. Forum Moderators will not be able to see the activation section (even if they have permission to use the Mod CP).
+
+This plugin offers full language support.
+
+
+## INSTALLATION ##
+
+1. Upload all files above, keeping the file structure intact.
+2. Go to Configuration > Plugins
+3. Click "Activate"
+4. Enjoy!
+
+
+## UPDATING ##
+
+If you're updating from any previous version, you must first deactivate the plugin, upload all new files and reactivate.

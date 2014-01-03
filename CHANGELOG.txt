@@ -1,0 +1,16 @@
+2.1
+- Dropped MyBB 1.4 support
+- Fixed minor template design issue
+- Optimization and general plugin updating
+
+2.0.1
+- Bug: Fixed permission issue causing activation section to not display to Super Moderators
+
+2.0
+- Updated plugin to work with MyBB 1.6
+
+1.0.1
+- Bug: Fixed bug with Multi-page
+
+1.0
+- Initial release
