@@ -284,7 +284,7 @@ function activate_run()
 		{
 			$alt_bg = alt_trow();
 			$user['username'] = build_profile_link($user['user_name'], $user['uid']);
-			$dateline = my_date($mybb->settings['dateformat'], $user['regdate']).", ".my_date($mybb->settings['timeformat'], $user['regdate']);
+			$dateline = my_date('relative', $user['regdate']);
 			if($user['reg_type'] == r)
 			{
 				$user['type'] = $lang->email_activation;
