@@ -18,7 +18,7 @@ if(my_strpos($_SERVER['PHP_SELF'], 'modcp.php'))
 	{
 		$templatelist .= ',';
 	}
-	$templatelist .= 'modcp_nav_activate,modcp_activate,modcp_activate_none,modcp_activate_row';
+	$templatelist .= 'modcp_nav_activate,modcp_activate,modcp_activate_actions,modcp_activate_none,modcp_activate_row';
 }
 
 // Tell MyBB when to run the hooks
@@ -88,8 +88,7 @@ function activate_activate()
 <br />
 <div align="center">
 <input type="hidden" name="action" value="do_activate" />
-<input type="submit" class="button" name="activate" value="{$lang->activate_users}" />
-<input type="submit" class="button" name="delete" value="{$lang->input_delete}" />
+{$activate_delete_actions}
 </div>
 </td>
 </tr>
@@ -98,6 +97,16 @@ function activate_activate()
 {$footer}
 </body>
 </html>'),
+		'sid'		=> '-1',
+		'version'	=> '',
+		'dateline'	=> TIME_NOW
+	);
+	$db->insert_query("templates", $insert_array);
+
+	$insert_array = array(
+		'title'		=> 'modcp_activate_actions',
+		'template'	=> $db->escape_string('<input type="submit" class="button" name="activate" value="{$lang->activate_users}" />
+<input type="submit" class="button" name="delete" value="{$lang->input_delete}" />'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
@@ -139,7 +148,7 @@ function activate_activate()
 function activate_deactivate()
 {
 	global $db;
-	$db->delete_query("templates", "title IN('modcp_nav_activate','modcp_activate','modcp_activate_none','modcp_activate_row')");
+	$db->delete_query("templates", "title IN('modcp_nav_activate','modcp_activate','modcp_activate_actions','modcp_activate_none','modcp_activate_row')");
 
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("modcp_nav_users", "#".preg_quote('{$nav_activate}')."#i", '', 0);
@@ -160,7 +169,7 @@ function activate_nav()
 // Mod CP activation page
 function activate_run()
 {
-	global $db, $mybb, $lang, $templates, $theme, $headerinclude, $header, $footer, $modcp_nav, $multipage;
+	global $db, $mybb, $lang, $templates, $theme, $headerinclude, $header, $footer, $modcp_nav, $multipage, $activate_delete_actions;
 	$lang->load("activate");
 
 	if($mybb->input['action'] == "do_activate")
@@ -300,6 +309,12 @@ function activate_run()
 
 			$user['regip'] = my_inet_ntop($db->unescape_binary($user['regip']));
 			eval("\$activate .= \"".$templates->get("modcp_activate_row")."\";");
+		}
+
+		$activate_delete_actions = '';
+		if(!empty($activate))
+		{
+			eval("\$activate_delete_actions = \"".$templates->get("modcp_activate_actions")."\";");
 		}
 
 		if(!$activate)
