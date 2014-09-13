@@ -198,15 +198,11 @@ function activate_run()
 
 		if($mybb->input['delete']) // delete users
 		{
-			$query = $db->simple_select("users", "uid", "uid IN ({$uids})");
-			$to_be_deleted = $db->num_rows($query);
+			require_once MYBB_ROOT.'inc/datahandlers/user.php';
+			$userhandler = new UserDataHandler('delete');
 
-			$db->delete_query("users", "uid IN ({$uids})");
-			$db->delete_query("userfields", "ufid IN ({$uids})");
-			$db->delete_query("awaitingactivation", "uid IN ({$uids})");
-			$db->delete_query("sessions", "uid IN ({$uids})");
+			$deleted = $userhandler->delete_user($uids);
 
-			update_stats(array('numusers' => '-'.$to_be_deleted.''));
 			$message = $lang->redirect_users_deleted;
 
 			$lang->mod_delete = $lang->sprintf($lang->mod_delete, $uids);
