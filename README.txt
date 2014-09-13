@@ -1,6 +1,6 @@
 ## INFORMATION ##
 
-Activate Users from Mod CP (2.1) for MyBB 1.6
+Activate Users from Mod CP (1.0) for MyBB 1.8
 Created by: Starpaul20
 Copyright: ©2010
 License: GPL
@@ -10,6 +10,8 @@ Allows Super Moderators and Administrators to activate or delete user accounts t
 The activation section will only work for Super Moderators and Administrators. Forum Moderators will not be able to see the activation section (even if they have permission to use the Mod CP).
 
 This plugin offers full language support.
+
+The 'oldrelease' branch contains the 1.6 version of the plugin.
 
 
 ## INSTALLATION ##
