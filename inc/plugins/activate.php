@@ -59,7 +59,7 @@ function activate_activate()
 		'title'		=> 'modcp_activate',
 		'template'	=> $db->escape_string('<html>
 <head>
-<title>{$mybb->settings[\'bbname\']} - {$lang->activate}</title>
+<title>{$mybb->settings[\'bbname\']} - {$lang->activate_users}</title>
 {$headerinclude}
 </head>
 <body>
@@ -72,7 +72,7 @@ function activate_activate()
 <td valign="top">
 <table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 <tr>
-<td class="thead" colspan="6"><strong>{$lang->activate}</strong></td>
+<td class="thead" colspan="6"><strong>{$lang->activate_users}</strong></td>
 </tr>
 <tr>
 <td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->username}</strong></span></td>
@@ -88,7 +88,7 @@ function activate_activate()
 <br />
 <div align="center">
 <input type="hidden" name="action" value="do_activate" />
-<input type="submit" class="button" name="activate" value="{$lang->activate}" />
+<input type="submit" class="button" name="activate" value="{$lang->activate_users}" />
 <input type="submit" class="button" name="delete" value="{$lang->input_delete}" />
 </div>
 </td>

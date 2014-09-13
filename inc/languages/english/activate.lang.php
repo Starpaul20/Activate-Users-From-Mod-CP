@@ -7,7 +7,7 @@
 $l['activate_info_name'] = "Activate Users from Mod CP";
 $l['activate_info_desc'] = "Allows Super Moderators and Administrators to activate user accounts from the Mod CP.";
 
-$l['activate'] = "Activate Users";
+$l['activate_users'] = "Activate Users";
 $l['username'] = "Username";
 $l['dateline'] = "Registration Date";
 $l['ipaddress'] = "IP Address";
