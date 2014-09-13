@@ -47,7 +47,7 @@ function activate_activate()
 	global $db;
 	$insert_array = array(
 		'title'		=> 'modcp_nav_activate',
-		'template'	=> $db->escape_string('<tr><td class="trow1 smalltext"><a href="modcp.php?action=activate" class="modcp_nav_item" style="background:url(\'images/modcp/activate.gif\') no-repeat left center;">{$lang->mcp_nav_activate}</a></td></tr>'),
+		'template'	=> $db->escape_string('<tr><td class="trow1 smalltext"><a href="modcp.php?action=activate" class="modcp_nav_item" style="background:url(\'images/activate.png\') no-repeat left center;">{$lang->mcp_nav_activate}</a></td></tr>'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
