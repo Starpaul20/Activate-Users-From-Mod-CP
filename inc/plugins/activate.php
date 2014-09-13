@@ -298,6 +298,7 @@ function activate_run()
 				$user['type'] = $lang->administrator_activation;
 			}
 
+			$user['regip'] = my_inet_ntop($db->unescape_binary($user['regip']));
 			eval("\$activate .= \"".$templates->get("modcp_activate_row")."\";");
 		}
 
