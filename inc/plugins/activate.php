@@ -166,14 +166,15 @@ function activate_run()
 	if($mybb->input['action'] == "do_activate")
 	{
 		// Verify incoming POST request
-		verify_post_check($mybb->input['my_post_key']);
+		verify_post_check($mybb->get_input('my_post_key'));
 
 		if($mybb->usergroup['issupermod'] == 0 && $mybb->usergroup['cancp'] == 0)
 		{
 			error_no_permission();
 		}
 
-		if(!is_array($mybb->input['check']))
+		$mybb->input['check'] = $mybb->get_input('check', 2);
+		if(empty($mybb->input['check']))
 		{
 			error($lang->no_users_selected);
 		}
@@ -222,13 +223,13 @@ function activate_run()
 			error_no_permission();
 		}
 
-		if(!$mybb->settings['threadsperpage'])
+		if(!(int)$mybb->settings['threadsperpage'])
 		{
 			$mybb->settings['threadsperpage'] = 20;
 		}
 
 		// Figure out if we need to display multiple pages.
-		$perpage = intval($mybb->input['perpage']);
+		$perpage = $mybb->get_input('perpage', 1);
 		if(!$perpage || $perpage <= 0)
 		{
 			$perpage = $mybb->settings['threadsperpage'];
@@ -240,7 +241,7 @@ function activate_run()
 		// Figure out if we need to display multiple pages.
 		if($mybb->input['page'] != "last")
 		{
-			$page = intval($mybb->input['page']);
+			$page = $mybb->get_input('page', 1);
 		}
 
 		$pages = $result / $perpage;
@@ -277,7 +278,7 @@ function activate_run()
 			LEFT JOIN ".TABLE_PREFIX."awaitingactivation a ON (a.uid=u.uid)
 			WHERE u.usergroup='5'
 			ORDER BY u.regdate DESC
-			LIMIT $start, $perpage
+			LIMIT {$start}, {$perpage}
 		");
 		while($user = $db->fetch_array($query2))
 		{
