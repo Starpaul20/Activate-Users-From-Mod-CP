@@ -1,8 +1,11 @@
 <?php
 /**
- * Activate from Mod CP
+ * Activate Users from Mod CP
  * Copyright 2010 Starpaul20
  */
+
+$l['activate_info_name'] = "Activate Users from Mod CP";
+$l['activate_info_desc'] = "Allows Super Moderators and Administrators to activate user accounts from the Mod CP.";
 
 $l['activate'] = "Activate Users";
 $l['username'] = "Username";

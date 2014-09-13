@@ -27,9 +27,12 @@ $plugins->add_hook("modcp_start", "activate_run");
 // The information that shows up on the plugin manager
 function activate_info()
 {
+	global $lang;
+	$lang->load("activate", true);
+
 	return array(
-		"name"				=> "Activate Users from Mod CP",
-		"description"		=> "Allows Super Moderators and Administrators to activate user accounts from the Mod CP.",
+		"name"				=> $lang->activate_info_name,
+		"description"		=> $lang->activate_info_desc,
 		"website"			=> "http://galaxiesrealm.com/index.php",
 		"author"			=> "Starpaul20",
 		"authorsite"		=> "http://galaxiesrealm.com/index.php",
