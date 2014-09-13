@@ -22,6 +22,7 @@ if(my_strpos($_SERVER['PHP_SELF'], 'modcp.php'))
 }
 
 // Tell MyBB when to run the hooks
+$plugins->add_hook("modcp_nav", "activate_nav");
 $plugins->add_hook("modcp_start", "activate_run");
 
 // The information that shows up on the plugin manager
@@ -131,7 +132,7 @@ function activate_activate()
 	$db->insert_query("templates", $insert_array);
 	
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	find_replace_templatesets("modcp_nav", "#".preg_quote('{$lang->mcp_nav_ipsearch}</a></td></tr>')."#i", '{$lang->mcp_nav_ipsearch}</a></td></tr><!-- activate -->');
+	find_replace_templatesets("modcp_nav_users", "#".preg_quote('{$nav_ipsearch}')."#i", '{$nav_ipsearch}{$nav_activate}');
 }
 
 // This function runs when the plugin is deactivated.
@@ -141,7 +142,19 @@ function activate_deactivate()
 	$db->delete_query("templates", "title IN('modcp_nav_activate','modcp_activate','modcp_activate_none','modcp_activate_row')");
 
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	find_replace_templatesets("modcp_nav", "#".preg_quote('<!-- activate -->')."#i", '', 0);
+	find_replace_templatesets("modcp_nav_users", "#".preg_quote('{$nav_activate}')."#i", '', 0);
+}
+
+// Mod CP nav menu
+function activate_nav()
+{
+	global $mybb, $lang, $templates, $nav_activate;
+	$lang->load("activate");
+
+	if($mybb->usergroup['issupermod'] == 1 || $mybb->usergroup['cancp'] == 1)
+	{
+		eval("\$nav_activate = \"".$templates->get("modcp_nav_activate")."\";");
+	}
 }
 
 // Mod CP activation page
@@ -149,12 +162,6 @@ function activate_run()
 {
 	global $db, $mybb, $lang, $templates, $theme, $headerinclude, $header, $footer, $modcp_nav, $multipage;
 	$lang->load("activate");
-
-	if($mybb->usergroup['issupermod'] == 1 || $mybb->usergroup['cancp'] == 1)
-	{
-		eval("\$activatenav = \"".$templates->get("modcp_nav_activate")."\";");
-		$modcp_nav = str_replace("<!-- activate -->", $activatenav, $modcp_nav);
-	}
 
 	if($mybb->input['action'] == "do_activate")
 	{
