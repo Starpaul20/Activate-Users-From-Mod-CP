@@ -282,7 +282,7 @@ function activate_run()
 		}
 
 		$query2 = $db->query("
-			SELECT u.*, u.username AS user_name, a.type AS reg_type, u.coppauser AS coppa
+			SELECT u.*, u.username AS user_name, a.type AS reg_type, a.validated, u.coppauser
 			FROM ".TABLE_PREFIX."users u
 			LEFT JOIN ".TABLE_PREFIX."awaitingactivation a ON (a.uid=u.uid)
 			WHERE u.usergroup='5'
@@ -294,11 +294,12 @@ function activate_run()
 			$alt_bg = alt_trow();
 			$user['username'] = build_profile_link($user['user_name'], $user['uid']);
 			$dateline = my_date('relative', $user['regdate']);
-			if($user['reg_type'] == r)
+
+			if($user['reg_type'] == 'r' || $user['reg_type'] == 'b' && $user['validated'] == 0)
 			{
 				$user['type'] = $lang->email_activation;
 			}
-			else if($user['coppa'] == 1)
+			elseif($user['coppauser'] == 1)
 			{
 				$user['type'] = $lang->admin_activation_coppa;
 			}
