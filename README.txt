@@ -5,9 +5,7 @@ Created by: Starpaul20
 Copyright: ©2010
 License: GPL
 
-Allows Super Moderators and Administrators to activate or delete user accounts that are Awaiting Activation from the Moderator CP.
-
-The activation section will only work for Super Moderators and Administrators. Forum Moderators will not be able to see the activation section (even if they have permission to use the Mod CP).
+Allows Moderators and Administrators to activate or delete user accounts that are Awaiting Activation from the Moderator CP.
 
 This plugin offers full language support.
 

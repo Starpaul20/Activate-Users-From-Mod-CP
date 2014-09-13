@@ -25,6 +25,9 @@ if(my_strpos($_SERVER['PHP_SELF'], 'modcp.php'))
 $plugins->add_hook("modcp_nav", "activate_nav");
 $plugins->add_hook("modcp_start", "activate_run");
 
+$plugins->add_hook("admin_formcontainer_output_row", "activate_usergroup_permission");
+$plugins->add_hook("admin_user_groups_edit_commit", "activate_usergroup_permission_commit");
+
 // The information that shows up on the plugin manager
 function activate_info()
 {
@@ -45,7 +48,14 @@ function activate_info()
 // This function runs when the plugin is activated.
 function activate_activate()
 {
-	global $db;
+	global $db, $cache;
+
+	if(!$db->field_exists("canactivateusers", "usergroups"))
+	{
+		$db->add_column("usergroups", "canactivateusers", "tinyint(1) NOT NULL default '1'");
+		$cache->update_usergroups();
+	}
+
 	$insert_array = array(
 		'title'		=> 'modcp_nav_activate',
 		'template'	=> $db->escape_string('<tr><td class="trow1 smalltext"><a href="modcp.php?action=activate" class="modcp_nav_item" style="background:url(\'images/activate.png\') no-repeat left center;">{$lang->mcp_nav_activate}</a></td></tr>'),
@@ -147,7 +157,15 @@ function activate_activate()
 // This function runs when the plugin is deactivated.
 function activate_deactivate()
 {
-	global $db;
+	global $db, $cache;
+
+	if($db->field_exists("canactivateusers", "usergroups"))
+	{
+		$db->drop_column("usergroups", "canactivateusers");
+	}
+
+	$cache->update_usergroups();
+
 	$db->delete_query("templates", "title IN('modcp_nav_activate','modcp_activate','modcp_activate_actions','modcp_activate_none','modcp_activate_row')");
 
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
@@ -160,7 +178,7 @@ function activate_nav()
 	global $mybb, $lang, $templates, $nav_activate;
 	$lang->load("activate");
 
-	if($mybb->usergroup['issupermod'] == 1 || $mybb->usergroup['cancp'] == 1)
+	if($mybb->usergroup['canactivateusers'] == 1)
 	{
 		eval("\$nav_activate = \"".$templates->get("modcp_nav_activate")."\";");
 	}
@@ -177,7 +195,7 @@ function activate_run()
 		// Verify incoming POST request
 		verify_post_check($mybb->get_input('my_post_key'));
 
-		if($mybb->usergroup['issupermod'] == 0 && $mybb->usergroup['cancp'] == 0)
+		if($mybb->usergroup['canactivateusers'] == 0)
 		{
 			error_no_permission();
 		}
@@ -227,7 +245,7 @@ function activate_run()
 		add_breadcrumb($lang->mcp_nav_home, "modcp.php");
 		add_breadcrumb($lang->mcp_nav_activate, "modcp.php?action=activate");
 
-		if($mybb->usergroup['issupermod'] == 0 && $mybb->usergroup['cancp'] == 0)
+		if($mybb->usergroup['canactivateusers'] == 0)
 		{
 			error_no_permission();
 		}
@@ -326,6 +344,26 @@ function activate_run()
 		eval("\$modactivate = \"".$templates->get("modcp_activate")."\";");
 		output_page($modactivate);
 	}
+}
+
+// Admin CP permission control
+function activate_usergroup_permission($above)
+{
+	global $mybb, $lang, $form;
+	$lang->load("activate", true);
+
+	if($above['title'] == $lang->user_options && $lang->user_options)
+	{
+		$above['content'] .= "<div class=\"group_settings_bit\">".$form->generate_check_box("canactivateusers", 1, $lang->can_activate_users, array("checked" => $mybb->input['canactivateusers']))."</div>";
+	}
+
+	return $above;
+}
+
+function activate_usergroup_permission_commit()
+{
+	global $mybb, $updated_group;
+	$updated_group['canactivateusers'] = (int)$mybb->input['canactivateusers'];
 }
 
 ?>
