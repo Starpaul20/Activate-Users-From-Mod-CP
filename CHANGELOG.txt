@@ -3,19 +3,19 @@
 
 ## Version number reset for MyBB 1.8 ##
 
-2.1
+2.1 (September 14th, 2011)
 - Dropped MyBB 1.4 support
 - Fixed minor template design issue
 - Optimization and general plugin updating
 
-2.0.1
+2.0.1 (September 25th, 2010)
 - Bug: Fixed permission issue causing activation section to not display to Super Moderators
 
-2.0
+2.0 (August 5th, 2010)
 - Updated plugin to work with MyBB 1.6
 
-1.0.1
+1.0.1 (July 5th, 2010)
 - Bug: Fixed bug with Multi-page
 
-1.0
+1.0 (July 2nd, 2010)
 - Initial release
