@@ -197,7 +197,7 @@ function activate_nav()
 // Mod CP activation page
 function activate_run()
 {
-	global $db, $mybb, $lang, $templates, $theme, $cache, $headerinclude, $header, $footer, $multipage, $activate_delete_actions;
+	global $db, $mybb, $lang, $templates, $theme, $cache, $headerinclude, $header, $footer, $modcp_nav, $multipage, $activate_delete_actions;
 	$lang->load("activate");
 
 	if($mybb->input['action'] == "do_activate")
