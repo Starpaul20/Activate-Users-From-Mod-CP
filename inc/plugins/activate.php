@@ -311,7 +311,7 @@ function activate_run()
 		}
 
 		$query2 = $db->query("
-			SELECT u.*, u.username AS user_name, a.type AS reg_type, a.validated, u.coppauser
+			SELECT u.uid, u.username, u.regdate, u.regip, u.email, u.coppauser, a.type AS reg_type, a.validated
 			FROM ".TABLE_PREFIX."users u
 			LEFT JOIN ".TABLE_PREFIX."awaitingactivation a ON (a.uid=u.uid)
 			WHERE u.usergroup='5'
@@ -321,7 +321,7 @@ function activate_run()
 		while($user = $db->fetch_array($query2))
 		{
 			$alt_bg = alt_trow();
-			$user['username'] = build_profile_link($user['user_name'], $user['uid']);
+			$user['username'] = build_profile_link($user['username'], $user['uid']);
 			$dateline = my_date('relative', $user['regdate']);
 
 			if($user['reg_type'] == 'r' || $user['reg_type'] == 'b' && $user['validated'] == 0)
