@@ -210,7 +210,7 @@ function activate_run()
 			error_no_permission();
 		}
 
-		$mybb->input['check'] = $mybb->get_input('check', 2);
+		$mybb->input['check'] = $mybb->get_input('check', MyBB::INPUT_ARRAY);
 		if(empty($mybb->input['check']))
 		{
 			error($lang->no_users_selected);
@@ -220,7 +220,7 @@ function activate_run()
 		$mybb->input['check'] = array_map('intval', $mybb->input['check']);
 		$uids = implode(", ", $mybb->input['check']);
 
-		if($mybb->input['activate']) // activate users
+		if($mybb->get_input('activate')) // activate users
 		{
 			$updated_accounts = array(
 				"usergroup" => "2",
@@ -234,7 +234,7 @@ function activate_run()
 			log_moderator_action(array("users" => $uids), $lang->mod_activate);
 		}
 
-		if($mybb->input['delete']) // delete users
+		if($mybb->get_input('delete')) // delete users
 		{
 			require_once MYBB_ROOT.'inc/datahandlers/user.php';
 			$userhandler = new UserDataHandler('delete');
@@ -266,7 +266,7 @@ function activate_run()
 		}
 
 		// Figure out if we need to display multiple pages.
-		$perpage = $mybb->get_input('perpage', 1);
+		$perpage = $mybb->get_input('perpage', MyBB::INPUT_INT);
 		if(!$perpage || $perpage <= 0)
 		{
 			$perpage = $mybb->settings['threadsperpage'];
@@ -278,7 +278,7 @@ function activate_run()
 		// Figure out if we need to display multiple pages.
 		if($mybb->input['page'] != "last")
 		{
-			$page = $mybb->get_input('page', 1);
+			$page = $mybb->get_input('page', MyBB::INPUT_INT);
 		}
 
 		$pages = $result / $perpage;
@@ -373,7 +373,7 @@ function activate_usergroup_permission($above)
 function activate_usergroup_permission_commit()
 {
 	global $mybb, $updated_group;
-	$updated_group['canactivateusers'] = (int)$mybb->input['canactivateusers'];
+	$updated_group['canactivateusers'] = $mybb->get_input('canactivateusers', MyBB::INPUT_INT);
 }
 
 ?>
