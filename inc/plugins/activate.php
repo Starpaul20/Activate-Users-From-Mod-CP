@@ -53,7 +53,16 @@ function activate_activate()
 
 	if(!$db->field_exists("canactivateusers", "usergroups"))
 	{
-		$db->add_column("usergroups", "canactivateusers", "tinyint(1) NOT NULL default '1'");
+		switch($db->type)
+		{
+			case "pgsql":
+				$db->add_column("usergroups", "canactivateusers", "smallint NOT NULL default '1'");
+				break;
+			default:
+				$db->add_column("usergroups", "canactivateusers", "tinyint(1) NOT NULL default '1'");
+				break;
+		}
+
 		$cache->update_usergroups();
 	}
 
