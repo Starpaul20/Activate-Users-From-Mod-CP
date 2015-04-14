@@ -223,8 +223,8 @@ function activate_run()
 		if($mybb->get_input('activate')) // activate users
 		{
 			$updated_accounts = array(
-				"usergroup" => "2",
-				"coppauser" => "0"
+				"usergroup" => 2,
+				"coppauser" => 0
 			);
 			$db->update_query("users", $updated_accounts, "uid IN ({$uids})");
 			$db->delete_query("awaitingactivation", "uid IN ({$uids})");
@@ -260,7 +260,7 @@ function activate_run()
 			error_no_permission();
 		}
 
-		if(!(int)$mybb->settings['threadsperpage'])
+		if(!$mybb->settings['threadsperpage'] || (int)$mybb->settings['threadsperpage'] < 1)
 		{
 			$mybb->settings['threadsperpage'] = 20;
 		}
