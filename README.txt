@@ -1,6 +1,6 @@
 ## INFORMATION ##
 
-Activate Users from Mod CP (1.0) for MyBB 1.8
+Activate Users from Mod CP (1.1) for MyBB 1.8
 Created by: Starpaul20
 Copyright: ©2010
 License: GPL

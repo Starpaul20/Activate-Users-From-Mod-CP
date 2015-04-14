@@ -1,3 +1,10 @@
+1.1 (April 14th, 2015)
+- Added PostgreSQL and SQLite support
+- Changed $mybb->input to $mybb->get_input
+- Update awaitingactivation cache when activating/deleting users
+- Updated query
+- General cleanup of stuff
+
 1.0 (September 13th, 2014)
 - Updated plugin to work with MyBB 1.8
 
