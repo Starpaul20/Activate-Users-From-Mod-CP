@@ -321,6 +321,8 @@ function activate_run()
 		while($user = $db->fetch_array($query2))
 		{
 			$alt_bg = alt_trow();
+
+			$user['username'] = htmlspecialchars_uni($user['username']);
 			$user['username'] = build_profile_link($user['username'], $user['uid']);
 			$dateline = my_date('relative', $user['regdate']);
 
