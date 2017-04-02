@@ -386,5 +386,3 @@ function activate_usergroup_permission_commit()
 	global $mybb, $updated_group;
 	$updated_group['canactivateusers'] = $mybb->get_input('canactivateusers', MyBB::INPUT_INT);
 }
-
-?>

@@ -29,5 +29,3 @@ $l['redirect_users_deleted'] = "The users have been deleted successfully.<br />Y
 
 $l['mod_activate'] = "Users Activated (UIDs: {1})";
 $l['mod_delete'] = "Users Deleted (UIDs: {1})";
-
-?>
