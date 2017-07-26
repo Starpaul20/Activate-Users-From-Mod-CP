@@ -26,6 +26,8 @@ $l['email_activation'] = "Email Activation";
 $l['no_users_selected'] = "No users were selected.";
 $l['redirect_users_activated'] = "The users have been activated successfully.<br />You will now be redirected to the activation page.";
 $l['redirect_users_deleted'] = "The users have been deleted successfully.<br />You will now be redirected to the activation page.";
+$l['confirm_activate_users'] = "Are you sure you want to activate the selected users?";
+$l['confirm_delete_users'] = "Are you sure you want to delete the selected users?";
 
 $l['mod_activate'] = "Users Activated (UIDs: {1})";
 $l['mod_delete'] = "Users Deleted (UIDs: {1})";

@@ -125,8 +125,8 @@ function activate_activate()
 
 	$insert_array = array(
 		'title'		=> 'modcp_activate_actions',
-		'template'	=> $db->escape_string('<input type="submit" class="button" name="activate" value="{$lang->activate_users}" />
-<input type="submit" class="button" name="delete" value="{$lang->input_delete}" />'),
+		'template'	=> $db->escape_string('<input type="submit" class="button" name="activate" value="{$lang->activate_users}" onclick="return confirm(\'{$lang->confirm_activate_users}\');" />
+<input type="submit" class="button" name="delete" value="{$lang->input_delete}" onclick="return confirm(\'{$lang->confirm_delete_users}\');" />'),
 		'sid'		=> '-1',
 		'version'	=> '',
 		'dateline'	=> TIME_NOW
@@ -256,7 +256,6 @@ function activate_run()
 			$query = $db->simple_select("users", "uid, username, email, usergroup, coppauser", "uid IN ({$user_ids})");
 			while($user = $db->fetch_array($query))
 			{
-				++$num_activated;
 				if($user['coppauser'])
 				{
 					$updated_user = array(
