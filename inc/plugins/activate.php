@@ -253,7 +253,7 @@ function activate_run()
 
 		if($mybb->get_input('activate'))  // Activate selected user(s)
 		{
-			$query = $db->simple_select("users", "uid, usergroup, coppauser", "uid IN ({$user_ids})");
+			$query = $db->simple_select("users", "uid, username, email, usergroup, coppauser", "uid IN ({$user_ids})");
 			while($user = $db->fetch_array($query))
 			{
 				++$num_activated;
@@ -275,6 +275,9 @@ function activate_run()
 				}
 
 				$db->update_query("users", $updated_user, "uid='{$user['uid']}'");
+
+				$emailmessage = $lang->sprintf($lang->email_adminactivateaccount, $user['username'], $mybb->settings['bbname'], $mybb->settings['bburl']);
+				my_mail($user['email'], $lang->sprintf($lang->emailsubject_activateaccount, $mybb->settings['bbname']), $emailmessage);
 			}
 
 			$message = $lang->redirect_users_activated;
