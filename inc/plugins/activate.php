@@ -210,41 +210,77 @@ function activate_run()
 			error_no_permission();
 		}
 
+		// Clean input - only accept integers thanks!
 		$mybb->input['check'] = $mybb->get_input('check', MyBB::INPUT_ARRAY);
 		if(empty($mybb->input['check']))
 		{
 			error($lang->no_users_selected);
 		}
 
-		// Clean input - only accept integers thanks!
 		$mybb->input['check'] = array_map('intval', $mybb->input['check']);
-		$uids = implode(", ", $mybb->input['check']);
+		$user_ids = implode(", ", $mybb->input['check']);
 
-		if($mybb->get_input('activate')) // activate users
+		if(empty($user_ids))
 		{
-			$updated_accounts = array(
-				"usergroup" => 2,
-				"coppauser" => 0
-			);
-			$db->update_query("users", $updated_accounts, "uid IN ({$uids})");
-			$db->delete_query("awaitingactivation", "uid IN ({$uids})");
-			$message = $lang->redirect_users_activated;
-
-			$lang->mod_activate = $lang->sprintf($lang->mod_activate, $uids);
-			log_moderator_action(array("users" => $uids), $lang->mod_activate);
+			error($lang->no_users_selected);
 		}
 
-		if($mybb->get_input('delete')) // delete users
+		$users_to_delete = array();
+		if($mybb->get_input('delete')) // Delete selected user(s)
 		{
 			require_once MYBB_ROOT.'inc/datahandlers/user.php';
 			$userhandler = new UserDataHandler('delete');
 
-			$deleted = $userhandler->delete_user($uids);
+			$query = $db->simple_select("users", "uid, usergroup", "uid IN ({$user_ids})");
+			while($user = $db->fetch_array($query))
+			{
+				if($user['usergroup'] == 5)
+				{
+					$users_to_delete[] = (int)$user['uid'];
+				}
+			}
+
+			if(!empty($users_to_delete))
+			{
+				$userhandler->delete_user($users_to_delete, 1);
+			}
 
 			$message = $lang->redirect_users_deleted;
 
-			$lang->mod_delete = $lang->sprintf($lang->mod_delete, $uids);
-			log_moderator_action(array("users" => $uids), $lang->mod_delete);
+			$lang->mod_delete = $lang->sprintf($lang->mod_delete, $user_ids);
+			log_moderator_action(array("users" => $user_ids), $lang->mod_delete);
+		}
+
+		if($mybb->get_input('activate'))  // Activate selected user(s)
+		{
+			$query = $db->simple_select("users", "uid, usergroup, coppauser", "uid IN ({$user_ids})");
+			while($user = $db->fetch_array($query))
+			{
+				++$num_activated;
+				if($user['coppauser'])
+				{
+					$updated_user = array(
+						"coppauser" => 0
+					);
+				}
+				else
+				{
+					$db->delete_query("awaitingactivation", "uid='{$user['uid']}'");
+				}
+
+				// Move out of awaiting activation if they're in it.
+				if($user['usergroup'] == 5)
+				{
+					$updated_user['usergroup'] = 2;
+				}
+
+				$db->update_query("users", $updated_user, "uid='{$user['uid']}'");
+			}
+
+			$message = $lang->redirect_users_activated;
+
+			$lang->mod_activate = $lang->sprintf($lang->mod_activate, $user_ids);
+			log_moderator_action(array("users" => $user_ids), $lang->mod_activate);
 		}
 
 		$cache->update_awaitingactivation();
