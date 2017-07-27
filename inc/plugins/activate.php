@@ -85,34 +85,34 @@ function activate_activate()
 <body>
 {$header}
 <form action="modcp.php" method="post">
-<input type="hidden" name="my_post_key" value="{$mybb->post_code}" />
-<table width="100%" border="0" align="center">
-<tr>
-{$modcp_nav}
-<td valign="top">
-<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
-<tr>
-<td class="thead" colspan="6"><strong>{$lang->activate_users}</strong></td>
-</tr>
-<tr>
-<td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->username}</strong></span></td>
-<td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->dateline}</strong></span></td>
-<td class="tcat" align="center" width="15%"><span class="smalltext"><strong>{$lang->ipaddress}</strong></span></td>
-<td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->email_address}</strong></span></td>
-<td class="tcat" align="center" width="25%"><span class="smalltext"><strong>{$lang->type}</strong></span></td>
-<td class="tcat" align="center" width="1"><input name="allbox" title="Select All" type="checkbox" class="checkbox checkall" value="1" /></td>
-</tr>
-{$activate}
-{$activatepages}
-</table>
-<br />
-<div align="center">
-<input type="hidden" name="action" value="do_activate" />
-{$activate_delete_actions}
-</div>
-</td>
-</tr>
-</table>
+	<input type="hidden" name="my_post_key" value="{$mybb->post_code}" />
+	<table width="100%" border="0" align="center">
+		<tr>
+			{$modcp_nav}
+			<td valign="top">
+				<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
+					<tr>
+						<td class="thead" colspan="6"><strong>{$lang->activate_users}</strong></td>
+					</tr>
+					<tr>
+						<td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->username}</strong></span></td>
+						<td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->dateline}</strong></span></td>
+						<td class="tcat" align="center" width="15%"><span class="smalltext"><strong>{$lang->ipaddress}</strong></span></td>
+						<td class="tcat" align="center" width="20%"><span class="smalltext"><strong>{$lang->email_address}</strong></span></td>
+						<td class="tcat" align="center" width="25%"><span class="smalltext"><strong>{$lang->type}</strong></span></td>
+						<td class="tcat" align="center" width="1"><input name="allbox" title="Select All" type="checkbox" class="checkbox checkall" value="1" /></td>
+					</tr>
+					{$activate}
+					{$activatepages}
+				</table>
+				<br />
+				<div align="center">
+					<input type="hidden" name="action" value="do_activate" />
+					{$activate_delete_actions}
+				</div>
+			</td>
+		</tr>
+	</table>
 </form>
 {$footer}
 </body>
@@ -136,7 +136,7 @@ function activate_activate()
 	$insert_array = array(
 		'title'		=> 'modcp_activate_none',
 		'template'	=> $db->escape_string('<tr>
-<td class="trow1" colspan="6" align="center">{$lang->no_awaiting_activation}</td>
+	<td class="trow1" colspan="6" align="center">{$lang->no_awaiting_activation}</td>
 </tr>'),
 		'sid'		=> '-1',
 		'version'	=> '',
@@ -147,12 +147,12 @@ function activate_activate()
 	$insert_array = array(
 		'title'		=> 'modcp_activate_row',
 		'template'	=> $db->escape_string('<tr>
-<td class="{$alt_bg}" align="center">{$user[\'username\']}</td>
-<td class="{$alt_bg}" align="center">{$dateline}</td>
-<td class="{$alt_bg}" align="center">{$user[\'regip\']}</td>
-<td class="{$alt_bg}" align="center">{$user[\'email\']}</td>
-<td class="{$alt_bg}" align="center">{$user[\'type\']}</td>
-<td class="{$alt_bg}" align="center"><input type="checkbox" class="checkbox" name="check[{$user[\'uid\']}]" value="{$user[\'uid\']}" /></td>
+	<td class="{$alt_bg}" align="center">{$user[\'username\']}</td>
+	<td class="{$alt_bg}" align="center">{$dateline}</td>
+	<td class="{$alt_bg}" align="center">{$user[\'regip\']}</td>
+	<td class="{$alt_bg}" align="center">{$user[\'email\']}</td>
+	<td class="{$alt_bg}" align="center">{$user[\'type\']}</td>
+	<td class="{$alt_bg}" align="center"><input type="checkbox" class="checkbox" name="check[{$user[\'uid\']}]" value="{$user[\'uid\']}" /></td>
 </tr>'),
 		'sid'		=> '-1',
 		'version'	=> '',
