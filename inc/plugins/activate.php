@@ -160,7 +160,7 @@ function activate_activate()
 	);
 	$db->insert_query("templates", $insert_array);
 	
-	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	require_once MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("modcp_nav_users", "#".preg_quote('{$nav_ipsearch}')."#i", '{$nav_ipsearch}{$nav_activate}');
 }
 
@@ -178,7 +178,7 @@ function activate_deactivate()
 
 	$db->delete_query("templates", "title IN('modcp_nav_activate','modcp_activate','modcp_activate_actions','modcp_activate_none','modcp_activate_row')");
 
-	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	require_once MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("modcp_nav_users", "#".preg_quote('{$nav_activate}')."#i", '', 0);
 }
 
