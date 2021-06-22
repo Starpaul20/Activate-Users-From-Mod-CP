@@ -200,6 +200,7 @@ function activate_run()
 	global $db, $mybb, $lang, $templates, $theme, $cache, $headerinclude, $header, $footer, $modcp_nav, $multipage, $activate_delete_actions;
 	$lang->load("activate");
 
+	$mybb->input['action'] = $mybb->get_input('action');
 	if($mybb->input['action'] == "do_activate")
 	{
 		// Verify incoming POST request
@@ -315,7 +316,7 @@ function activate_run()
 		$result = $db->fetch_field($query, "count");
 
 		// Figure out if we need to display multiple pages.
-		if($mybb->input['page'] != "last")
+		if($mybb->get_input('page') != "last")
 		{
 			$page = $mybb->get_input('page', MyBB::INPUT_INT);
 		}
@@ -323,7 +324,7 @@ function activate_run()
 		$pages = $result / $perpage;
 		$pages = ceil($pages);
 
-		if($mybb->input['page'] == "last")
+		if($mybb->get_input('page') == "last")
 		{
 			$page = $pages;
 		}
@@ -343,6 +344,7 @@ function activate_run()
 		}
 
 		$multipage = multipage($result, $perpage, $page, "modcp.php?action=activate");
+		$activatepages = '';
 		if($result > $perpage)
 		{
 			eval("\$activatepages = \"".$templates->get("modcp_reports_multipage")."\";");
@@ -356,6 +358,7 @@ function activate_run()
 			ORDER BY u.regdate DESC
 			LIMIT {$start}, {$perpage}
 		");
+		$activate = '';
 		while($user = $db->fetch_array($query2))
 		{
 			$alt_bg = alt_trow();
