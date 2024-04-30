@@ -414,7 +414,7 @@ function activate_usergroup_permission($above)
 	global $mybb, $lang, $form;
 	$lang->load("activate", true);
 
-	if($above['title'] == $lang->user_options && $lang->user_options)
+	if(isset($lang->user_options) && $above['title'] == $lang->user_options)
 	{
 		$above['content'] .= "<div class=\"group_settings_bit\">".$form->generate_check_box("canactivateusers", 1, $lang->can_activate_users, array("checked" => $mybb->input['canactivateusers']))."</div>";
 	}
